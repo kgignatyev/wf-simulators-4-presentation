@@ -4,7 +4,7 @@ import com.xpansiv.wf.user_management.*
 import io.temporal.client.WorkflowClient
 import io.temporal.client.WorkflowOptions
 
-class WFStarter(val temporalio: TemporalioConnector, val wfQueue: String){
+class WF_UMgmtClient(val temporalio: TemporalioConnector) {
 
     fun createUser(userId: String, userName: String) {
         val cmd = UserChangeCommand().setUserInfo(
@@ -37,17 +37,17 @@ class WFStarter(val temporalio: TemporalioConnector, val wfQueue: String){
     private fun executeWorkflowFor(cmd: UserChangeCommand) {
         println("Executing: " + JsonHelper.toJsonString(cmd))
 
-       val wfStub =  temporalio.client.newWorkflowStub(
+        val wfStub = temporalio.client.newWorkflowStub(
             WFUserManagement::class.java,
             WorkflowOptions.newBuilder()
-                .setTaskQueue(wfQueue)
+                .setTaskQueue(WFUserManagement.WF_TASKS_QUEUE)
                 .build()
         )
         //        synchronized WF start
 //            .executeCommand(cmd)
 
 //async start
-          val wfExecution =  WorkflowClient.start( wfStub::executeCommand, cmd )
+        val wfExecution = WorkflowClient.start(wfStub::executeCommand, cmd)
         println("Started workflow: ${wfExecution.workflowId}")
     }
 
@@ -56,20 +56,19 @@ class WFStarter(val temporalio: TemporalioConnector, val wfQueue: String){
         fun main(args: Array<String>) {
             try {
                 val tioc = TemporalioConnector(createFactory = false)
-                val wfStarter = WFStarter(tioc, WFUserManagement.WF_TASKS_QUEUE)
+                val wfClient = WF_UMgmtClient(tioc)
                 if (args.isEmpty()) {
                     println("No arguments supplied")
                 } else {
                     println("starting workflow for ${args.joinToString()}")
                     val op: String = args[0]
                     when (op) {
-                        "create-user" -> wfStarter.createUser(args[1], args[2])
-                        "update-user" -> wfStarter.updateUser(args[1], args[2])
-                        "block-user" -> wfStarter.blockUser(args[1])
-                        "unblock-user" -> wfStarter.unblockUser(args[1])
+                        "create-user" -> wfClient.createUser(args[1], args[2])
+                        "update-user" -> wfClient.updateUser(args[1], args[2])
+                        "block-user" -> wfClient.blockUser(args[1])
+                        "unblock-user" -> wfClient.unblockUser(args[1])
                     }
                 }
-                println("finish")
 
             } catch (e: Exception) {
                 e.printStackTrace()

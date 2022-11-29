@@ -5,18 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.xpansiv.workflows</groupId>
-    <artifactId>wf-user-management-simulators</artifactId>
-    <version>1.0.${release}</version>
+    <artifactId>wf-simulators-4-presentation</artifactId>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
-    <name>wf-user-management-simulators</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <jackson.version>2.14.1</jackson.version>
         <junit.version>4.13.2</junit.version>
-        <release>0-SNAPSHOT</release>
         <kotlin.version>1.7.21</kotlin.version>
     </properties>
 
@@ -27,6 +25,12 @@
             <groupId>com.xpansiv.workflows</groupId>
             <artifactId>wf-user-management</artifactId>
             <version>1.0.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xpansiv.workflows</groupId>
+            <artifactId>wf-assets-transfer</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

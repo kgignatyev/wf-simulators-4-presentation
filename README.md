@@ -1,4 +1,10 @@
-0. Temporal overview
+0. Xpansiv overview
+    Challenge of integration: external and internal systems
+    Everything is evolving
+1. Temporal overview ( https://docs.temporal.io/workflows )
+   2. concepts
+   3. queues without pain of managing them
+   4. state management and even sourcing
 
 1. Simple workflow (unbounded sequential)
 
