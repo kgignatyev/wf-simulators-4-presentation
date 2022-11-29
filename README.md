@@ -1,18 +1,31 @@
 0. Xpansiv overview
-    Challenge of integration: external and internal systems
-    Everything is evolving
+    * A bit about carbon offsets and renewable energy credits
+    * Challenge of integration: external and internal systems
+    * Everything is evolving
 1. Temporal overview ( https://docs.temporal.io/workflows )
    2. concepts
    3. queues without pain of managing them
    4. state management and even sourcing
+   5. workflows are unit testable!!!
+2. Simple workflow (unbounded sequential)
+   * demo with unbounded workflow 1.0.13
+```shell
+./start-user-management-wf.sh 
+./run-ema-simulator.sh
+./run-maestro-simulator.sh
+./run-xmarkets-simulator.sh
 
-1. Simple workflow (unbounded sequential)
+./start-user-management-wf.sh
+```
+* stop maestro
+* start workflow 
+```shell
+./start-user-management-wf.sh create-user u1 User1
+```
+show 'running workflow' and retries (if intentionally break maestro implementation)
+start maestro, demo that workflow recovered
 
-demo with unbounded workflow
-
- 1.0.13
-
-2. Simple workflow - bounded
+1. Simple workflow - bounded
 
 demo failing workflow with 1.0.14
 start workflow while maestro simulator fails
@@ -36,3 +49,10 @@ workflow 1.0.15
  demo that stuck activity in the middle does not prevent other systems from receiving notifications
 
  2nd demo: same stuck activity and use of queries (keep refreshing UI while starting downed activity )
+
+5. WorkflowID, RunID, sync and async execution of workflows
+   6. demo of code and explanation
+6. Signals and Queries, running a FSM (Final State Machine)
+   7. demo of asset transfer workflow
+8. Brief overview of SCM library for writing FSMs
+9. Teaser of other Temporal.io capabilities: Saga, Eternal Workflows, Child workflows

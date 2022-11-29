@@ -37,15 +37,14 @@ class WF_UMgmtClient(val temporalio: TemporalioConnector) {
     private fun executeWorkflowFor(cmd: UserChangeCommand) {
         println("Executing: " + JsonHelper.toJsonString(cmd))
 
-        val wfStub = temporalio.client.newWorkflowStub(
-            WFUserManagement::class.java,
+        val wfStub = temporalio.client.newWorkflowStub( WFUserManagement::class.java,
             WorkflowOptions.newBuilder()
                 .setTaskQueue(WFUserManagement.WF_TASKS_QUEUE)
+                .setWorkflowId( cmd.userInfo.id) //we can reuse workflow ID
                 .build()
         )
-        //        synchronized WF start
-//            .executeCommand(cmd)
-
+// synchronized WF start
+//            wfStub.executeCommand(cmd)
 //async start
         val wfExecution = WorkflowClient.start(wfStub::executeCommand, cmd)
         println("Started workflow: ${wfExecution.workflowId}")
@@ -59,6 +58,7 @@ class WF_UMgmtClient(val temporalio: TemporalioConnector) {
                 val wfClient = WF_UMgmtClient(tioc)
                 if (args.isEmpty()) {
                     println("No arguments supplied")
+                    System.exit(1)
                 } else {
                     println("starting workflow for ${args.joinToString()}")
                     val op: String = args[0]
@@ -72,6 +72,8 @@ class WF_UMgmtClient(val temporalio: TemporalioConnector) {
 
             } catch (e: Exception) {
                 e.printStackTrace()
+                System.exit(1)
+
             }
             System.exit(0)
         }
