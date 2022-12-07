@@ -8,6 +8,7 @@
    4. state management and even sourcing
    5. workflows are unit testable!!!
 2. Simple workflow (unbounded sequential)
+   * have local temporal cluster up with ```docker-compose up``` UI is at 
    * demo with unbounded workflow 1.0.13
 ```shell
 ./start-user-management-wf.sh 
@@ -15,12 +16,12 @@
 ./run-maestro-simulator.sh
 ./run-xmarkets-simulator.sh
 
-./start-user-management-wf.sh
+./start-user-management-wf.sh create-user u1 User1
 ```
 * stop maestro
 * start workflow 
 ```shell
-./start-user-management-wf.sh create-user u1 User1
+./start-user-management-wf.sh update-user u1 User1
 ```
 show 'running workflow' and retries (if intentionally break maestro implementation)
 start maestro, demo that workflow recovered
