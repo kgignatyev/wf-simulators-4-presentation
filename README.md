@@ -12,9 +12,9 @@
    * demo with unbounded workflow 1.0.13
 ```shell
 ./start-user-management-wf.sh 
-./run-ema-simulator.sh
-./run-maestro-simulator.sh
 ./run-xmarkets-simulator.sh
+./run-maestro-simulator.sh
+./run-ema-simulator.sh
 
 ./start-user-management-wf.sh create-user u1 User1
 ```
@@ -54,6 +54,19 @@ workflow 1.0.15
 5. WorkflowID, RunID, sync and async execution of workflows
    6. demo of code and explanation
 6. Signals and Queries, running a FSM (Final State Machine)
-   7. demo of asset transfer workflow
+   7. demo of asset transfer workflow  
+      ```shell
+         ./run-assets-transfer-wf.sh
+         export WF_ID=....
+         ./start-assets-transfer-wf.sh s1 r2 eai123 10
+         ./query-visualize-wf.sh
+         open target/Main.STARTED.png
+         ./send-signal.sh LockSenderFunds
+         ./visualize-wf.sh
+      ```
 8. Brief overview of SCM library for writing FSMs
 9. Teaser of other Temporal.io capabilities: Saga, Eternal Workflows, Child workflows
+10. WF continuity 
+    ```shell
+      mvn -Dexec.mainClass=com.xpansiv.wf.user_management.ContinuityDemoRunner -Dexec.classpathScope=test test-compile exec:java
+   ```
